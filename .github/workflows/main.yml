@@ -29,4 +29,7 @@ jobs:
 
       - name: Run PowerShell Script
         shell: pwsh
+        env:
+          VM_USERNAME: ${{ secrets.VM_USERNAME }}
+          VM_PASSWORD: ${{ secrets.VM_PASSWORD }}
         run: ./create-vm.ps1

@@ -1,12 +1,27 @@
-name: PowerShell VM Deployment
+name: Azure PowerShell Automation
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Run PowerShell script
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install PowerShell
+        uses: PowerShell/PowerShell@v1
+
+      - name: Install Az Module
+        shell: pwsh
+        run: |
+          Install-Module -Name Az -Force -Scope CurrentUser -AllowClobber
+          Import-Module Az
+
+      - name: Run PowerShell Script
         shell: pwsh
         run: ./create-vm.ps1

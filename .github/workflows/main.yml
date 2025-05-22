@@ -23,8 +23,9 @@ jobs:
         shell: pwsh
         run: |
           $creds = '${{ secrets.AZURE_CREDENTIALS }}' | ConvertFrom-Json
-          Connect-AzAccount -ServicePrincipal -TenantId $creds.tenantId `
-            -ApplicationId $creds.clientId -Credential (ConvertTo-SecureString $creds.clientSecret -AsPlainText -Force)
+          $securePassword = ConvertTo-SecureString $creds.clientSecret -AsPlainText -Force
+          $psCred = New-Object System.Management.Automation.PSCredential ($creds.clientId, $securePassword)
+          Connect-AzAccount -ServicePrincipal -Credential $psCred -TenantId $creds.tenantId
 
       - name: Run PowerShell Script
         shell: pwsh

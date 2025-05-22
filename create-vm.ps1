@@ -2,7 +2,7 @@ $resourceGroup = "MyResourceGroup"
 $location = "canadacentral"
 $vmName = "MyVM"
 
-New-AzResourceGroup -Name $resourceGroup -Location $location
+New-AzResourceGroup -Name $resourceGroup -Location $location -Force
 
 $cred = Get-Credential
 New-AzVm `

@@ -19,6 +19,13 @@ jobs:
           Install-Module -Name Az -Force -Scope CurrentUser -AllowClobber
           Import-Module Az
 
+      - name: Login to Azure
+        shell: pwsh
+        run: |
+          $creds = '${{ secrets.AZURE_CREDENTIALS }}' | ConvertFrom-Json
+          Connect-AzAccount -ServicePrincipal -TenantId $creds.tenantId `
+            -ApplicationId $creds.clientId -Credential (ConvertTo-SecureString $creds.clientSecret -AsPlainText -Force)
+
       - name: Run PowerShell Script
         shell: pwsh
         run: ./create-vm.ps1

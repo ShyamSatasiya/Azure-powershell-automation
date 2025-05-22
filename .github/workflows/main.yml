@@ -29,4 +29,4 @@ jobs:
 
       - name: Run PowerShell Script
         shell: pwsh
-        run: ./create-vm.ps1
+        run: ./Azure-powershell-automation/create-vm.ps1
